@@ -1,0 +1,38 @@
+<body>
+
+    <div class="card">
+        <h2>Create Account</h2>
+
+        <input id="email" placeholder="Email">
+        <input id="password" type="password" placeholder="Password">
+        <button onclick="signup()">Sign Up</button>
+
+        <p>Already registered? <a href="login.html">Login</a></p>
+    </div>
+
+    <script>
+        function signup() {
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+
+            if (!email || !password) {
+                alert("All fields are required");
+                return;
+            }
+
+            let users = JSON.parse(localStorage.getItem("users")) || [];
+
+            if (users.find(u => u.email === email)) {
+                alert("User already exists");
+                return;
+            }
+
+            users.push({ email, password });
+            localStorage.setItem("users", JSON.stringify(users));
+
+            alert("Signup successful");
+            window.location = "login.html";
+        }
+    </script>
+
+</body>

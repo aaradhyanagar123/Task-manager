@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+    <div class="card">
+        <h2>My Tasks</h2>
+
+
+        <input id="taskInput" placeholder="Enter new task">
+        <button onclick="addTask()">Add Task</button>
+
+
+        <ul id="taskList"></ul>
+
+
+        <button onclick="logout()" class="btn outline">Logout</button>
+    </div>
+
+    <script>
+
+        const user = localStorage.getItem("loggedInUser");
+        if (!user) {
+            window.location = "login.html";
+        }
+
+
+        function getTasks() {
+            return JSON.parse(localStorage.getItem(user)) || [];
+        }
+
+
+        function saveTasks(tasks) {
+            localStorage.setItem(user, JSON.stringify(tasks));
+        }
+
+
+        function addTask() {
+            const taskText = taskInput.value.trim();
+
+            if (taskText === "") {
+                alert("Task cannot be empty");
+                return;
+            }
+
+            const tasks = getTasks();
+
+            const newTask = {
+                title: taskText,
+                completed: false
+            };
+
+            tasks.push(newTask);
+            saveTasks(tasks);
+            taskInput.value = "";
+            loadTasks();
+        }
+
+
+        function toggleTask(index) {
+            const tasks = getTasks();
+            tasks[index].completed = !tasks[index].completed;
+            saveTasks(tasks);
+            loadTasks();
+        }
+
+
+        function deleteTask(index) {
+            const tasks = getTasks();
+            tasks.splice(index, 1);
+            saveTasks(tasks);
+            loadTasks();
+        }
+
+
+        function loadTasks() {
+            const tasks = getTasks();
+            taskList.innerHTML = "";
+
+            tasks.forEach((task, index) => {
+                taskList.innerHTML += `
+  <li class="task-item">
+    <span 
+      class="task-text"
+      onclick="toggleTask(${index})"
+      style="text-decoration:${task.completed ? 'line-through' : 'none'}">
+      ${task.title}
+    </span>
+    <button class="delete-btn" onclick="deleteTask(${index})">✕</button>
+  </li>
+`;
+
+            });
+        }
+
+
+        function logout() {
+            localStorage.removeItem("loggedInUser");
+            window.location = "login.html";
+        }
+
+
+        loadTasks();
+    </script>
+
+</body>
+
+</html>

@@ -37,7 +37,6 @@ Completed tasks are styled differently to indicate status.
 Add Task : Enter a valid task and click "Add" ; Task appears in the list
 Add Task : Leave input empty and click "Add" ; Error message or no task added
 Delete Task	: Click delete on a task ; Task disappears from the list
-Complete Task : Click checkbox on a task ; Task shows as completed (maybe strikethrough)
 Task List Display : Add multiple tasks	; All tasks display in order, no duplicates
 UI Responsiveness : Resize browser or use mobile device	UI elements adjust, buttons visible and clickable
 Button Disabled	: Try clicking "Add" with empty input ; Button disabled or no action occurs
